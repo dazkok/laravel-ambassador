@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AmbassadorController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+//Admin
+Route::prefix('admin')->group(function () {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+
+    Route::middleware(['auth:sanctum', 'scope.admin'])->group(function (){
+        Route::get('user', [AuthController::class, 'user']);
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::put('user/info', [AuthController::class, 'updateInfo']);
+        Route::put('user/password', [AuthController::class, 'updatePassword']);
+
+        Route::get('ambassadors', [AmbassadorController::class, 'index']);
+
+        Route::apiResource('products', ProductController::class);
+    });
 });
+
+
+//Ambassador
+
+//Checkout
