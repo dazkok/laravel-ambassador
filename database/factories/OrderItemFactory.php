@@ -24,7 +24,8 @@ class OrderItemFactory extends Factory
             'product_title' => $product->title,
             'price' => $product->price,
             'quantity' => $quantity,
-            'admin_revenue' => 0.1 * $product->price * $quantity
+            'admin_revenue' => 0.9 * $product->price * $quantity,
+            'ambassador_revenue' => 0.1 * $product->price * $quantity,
         ];
     }
 }

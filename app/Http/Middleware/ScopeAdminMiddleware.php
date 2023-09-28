@@ -18,7 +18,7 @@ class ScopeAdminMiddleware
         if (!$request->user()->tokenCan('admin')) {
             abort(401, 'unauthorized');
         }
-        
+
         return $next($request);
     }
 }
