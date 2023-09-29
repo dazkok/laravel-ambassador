@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Link whereUserId($value)
  * @method static \Database\Factories\LinkFactory factory($count = null, $state = [])
  * @property-read \App\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
+ * @property-read int|null $products_count
  * @mixin \Eloquent
  */
 class Link extends Model
@@ -34,5 +36,15 @@ class Link extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, LinkProduct::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'code')->where('complete', 1);
     }
 }
